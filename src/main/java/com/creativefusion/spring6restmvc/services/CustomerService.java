@@ -9,6 +9,7 @@ import java.util.UUID;
  * @author sm@creativefusion.net
  */
 public interface CustomerService {
+    Customer saveNewCustomer(Customer customer);
     Customer getCustomerById(UUID uuid);
     List<Customer> getAllCustomers();
 }
