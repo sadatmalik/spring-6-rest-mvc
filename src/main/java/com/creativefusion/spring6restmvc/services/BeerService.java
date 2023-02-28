@@ -9,6 +9,7 @@ import java.util.UUID;
  * @author sm@creativefusion.net
  */
 public interface BeerService {
+    Beer saveNewBeer(Beer beer);
     List<Beer> listBeers();
     Beer getBeerById(UUID id);
 }
