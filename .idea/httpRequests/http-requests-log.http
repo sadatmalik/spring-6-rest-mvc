@@ -1,0 +1,21 @@
+GET http://localhost:8080/api/v1/beer/74704b7e-ec20-4590-8a70-693c3847284a
+Accept: application/json
+
+<> 2023-02-28T075221.200.json
+
+###
+
+GET http://localhost:8080/api/v1/beer
+Accept: application/json
+
+<> 2023-02-28T075212.200.json
+
+###
+
+GET http://localhost:8080/api/v1/beer
+Accept: application/json
+
+<> 2023-02-27T225307.200.json
+
+###
+
