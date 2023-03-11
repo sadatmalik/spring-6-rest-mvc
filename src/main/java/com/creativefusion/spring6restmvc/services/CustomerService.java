@@ -3,6 +3,7 @@ package com.creativefusion.spring6restmvc.services;
 import com.creativefusion.spring6restmvc.model.Customer;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -10,7 +11,7 @@ import java.util.UUID;
  */
 public interface CustomerService {
     Customer saveNewCustomer(Customer customer);
-    Customer getCustomerById(UUID uuid);
+    Optional<Customer> getCustomerById(UUID uuid);
     List<Customer> getAllCustomers();
     void updateCustomerById(UUID customerId, Customer customer);
     void patchCustomerById(UUID customerId, Customer customer);
