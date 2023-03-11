@@ -1,6 +1,6 @@
 package com.creativefusion.spring6restmvc.controllers;
 
-import com.creativefusion.spring6restmvc.model.Beer;
+import com.creativefusion.spring6restmvc.model.BeerDTO;
 import com.creativefusion.spring6restmvc.services.BeerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +25,9 @@ public class BeerController {
     private final BeerService beerService;
 
     @PostMapping(BEER_PATH)
-    public ResponseEntity<Void> handlePost(@RequestBody Beer beer){
+    public ResponseEntity<Void> handlePost(@RequestBody BeerDTO beer){
 
-        Beer savedBeer = beerService.saveNewBeer(beer);
+        BeerDTO savedBeer = beerService.saveNewBeer(beer);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/beer/" + savedBeer.getId().toString());
@@ -36,12 +36,12 @@ public class BeerController {
     }
 
     @GetMapping(value = BEER_PATH)
-    public List<Beer> listBeers(){
+    public List<BeerDTO> listBeers(){
         return beerService.listBeers();
     }
 
     @GetMapping(value = BEER_PATH_ID)
-    public Beer getBeerById(@PathVariable("beerId") UUID beerId){
+    public BeerDTO getBeerById(@PathVariable("beerId") UUID beerId){
 
         log.debug("Get Beer by Id - in controller");
 
@@ -51,7 +51,7 @@ public class BeerController {
 
     @PutMapping(BEER_PATH_ID)
     public ResponseEntity<Void> updateById(@PathVariable("beerId") UUID beerId,
-                                     @RequestBody Beer beer){
+                                     @RequestBody BeerDTO beer){
         beerService.updateBeerById(beerId, beer);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -59,7 +59,7 @@ public class BeerController {
 
     @PatchMapping(BEER_PATH_ID)
     public ResponseEntity<Void> updateBeerPatchById(@PathVariable("beerId")UUID beerId,
-                                              @RequestBody Beer beer){
+                                              @RequestBody BeerDTO beer){
         beerService.patchBeerById(beerId, beer);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
