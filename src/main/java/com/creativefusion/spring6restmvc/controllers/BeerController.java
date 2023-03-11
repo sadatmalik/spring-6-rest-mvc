@@ -25,14 +25,14 @@ public class BeerController {
     private final BeerService beerService;
 
     @PostMapping(BEER_PATH)
-    public ResponseEntity handlePost(@RequestBody Beer beer){
+    public ResponseEntity<Void> handlePost(@RequestBody Beer beer){
 
         Beer savedBeer = beerService.saveNewBeer(beer);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/beer/" + savedBeer.getId().toString());
 
-        return new ResponseEntity(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @GetMapping(value = BEER_PATH)
@@ -49,31 +49,31 @@ public class BeerController {
     }
 
     @PutMapping(BEER_PATH_ID)
-    public ResponseEntity updateById(@PathVariable("beerId") UUID beerId,
+    public ResponseEntity<Void> updateById(@PathVariable("beerId") UUID beerId,
                                      @RequestBody Beer beer){
         beerService.updateBeerById(beerId, beer);
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping(BEER_PATH_ID)
-    public ResponseEntity updateBeerPatchById(@PathVariable("beerId")UUID beerId,
+    public ResponseEntity<Void> updateBeerPatchById(@PathVariable("beerId")UUID beerId,
                                               @RequestBody Beer beer){
         beerService.patchBeerById(beerId, beer);
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(BEER_PATH_ID)
-    public ResponseEntity deleteById(@PathVariable("beerId") UUID beerId){
+    public ResponseEntity<Void> deleteById(@PathVariable("beerId") UUID beerId){
 
         beerService.deleteById(beerId);
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity handleNotFoundException(){
+    public ResponseEntity<Void> handleNotFoundException(){
         return ResponseEntity.notFound().build();
     }
 
