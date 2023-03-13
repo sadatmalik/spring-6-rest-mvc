@@ -23,7 +23,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping(CUSTOMER_PATH)
-    public ResponseEntity<Void> handlePost(@RequestBody CustomerDTO customer){
+    public ResponseEntity<Void> handlePost(@RequestBody CustomerDTO customer) {
         CustomerDTO savedCustomer = customerService.saveNewCustomer(customer);
 
         HttpHeaders headers = new HttpHeaders();
@@ -33,37 +33,33 @@ public class CustomerController {
     }
 
     @GetMapping(CUSTOMER_PATH)
-    public List<CustomerDTO> listAllCustomers(){
+    public List<CustomerDTO> listAllCustomers() {
         return customerService.getAllCustomers();
     }
 
     @GetMapping(CUSTOMER_PATH_ID)
-    public CustomerDTO getCustomerById(@PathVariable("customerId") UUID id){
+    public CustomerDTO getCustomerById(@PathVariable("customerId") UUID id) {
         return customerService.getCustomerById(id)
                               .orElseThrow(NotFoundException::new);
     }
 
     @PutMapping(CUSTOMER_PATH_ID)
     public ResponseEntity<Void> updateCustomerByID(@PathVariable("customerId") UUID customerId,
-                                             @RequestBody CustomerDTO customer){
+                                                   @RequestBody CustomerDTO customer) {
         customerService.updateCustomerById(customerId, customer);
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping(CUSTOMER_PATH_ID)
     public ResponseEntity<Void> patchCustomerById(@PathVariable("customerId") UUID customerId,
-                                            @RequestBody CustomerDTO customer){
+                                                  @RequestBody CustomerDTO customer) {
         customerService.patchCustomerById(customerId, customer);
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(CUSTOMER_PATH_ID)
-    public ResponseEntity<Void> deleteCustomerById(@PathVariable("customerId") UUID customerId){
-
+    public ResponseEntity<Void> deleteCustomerById(@PathVariable("customerId") UUID customerId) {
         customerService.deleteCustomerById(customerId);
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
