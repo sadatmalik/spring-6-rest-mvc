@@ -101,4 +101,17 @@ class BeerControllerIT {
                 () -> beerController.updateById(UUID.randomUUID(), BeerDTO.builder().build())
         );
     }
+
+    @Test
+    @Rollback
+    @Transactional
+    void deleteByIdFound() {
+        Beer beer = beerRepository.findAll().get(0);
+
+        ResponseEntity<Void> responseEntity = beerController.deleteById(beer.getId());
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
+
+        assertTrue(beerRepository.findById(beer.getId()).isEmpty());
+    }
+
 }
