@@ -1,6 +1,7 @@
 package com.creativefusion.spring6restmvc.controllers;
 
 import com.creativefusion.spring6restmvc.entities.Beer;
+import com.creativefusion.spring6restmvc.mappers.BeerMapper;
 import com.creativefusion.spring6restmvc.model.BeerDTO;
 import com.creativefusion.spring6restmvc.repositories.BeerRepository;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,15 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class BeerControllerIT {
-    @Autowired
-    BeerController beerController;
+    @Autowired BeerController beerController;
+    @Autowired BeerRepository beerRepository;
+    @Autowired BeerMapper beerMapper;
 
-    @Autowired
-    BeerRepository beerRepository;
-
+    @Test
     @Rollback
     @Transactional
-    @Test
     void saveNewBeerTest() {
         BeerDTO beerDTO = BeerDTO.builder()
                                  .beerName("New Beer")
@@ -74,4 +74,23 @@ class BeerControllerIT {
         assertThat(dtos.size()).isEqualTo(0);
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    void updateExistingBeer() {
+        Beer beer = beerRepository.findAll().get(0);
+        BeerDTO beerDTO = beerMapper.beerToBeerDto(beer);
+        beerDTO.setId(null);
+        beerDTO.setVersion(null);
+        final String beerName = "UPDATED";
+        beerDTO.setBeerName(beerName);
+
+        ResponseEntity<Void> responseEntity = beerController.updateById(beer.getId(), beerDTO);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
+
+        Optional<Beer> updatedBeer = beerRepository.findById(beer.getId());
+        assertTrue(updatedBeer.isPresent());
+        Beer updated = updatedBeer.get();
+        assertThat(updated.getBeerName()).isEqualTo(beerName);
+    }
 }
