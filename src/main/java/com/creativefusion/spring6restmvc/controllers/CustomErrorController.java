@@ -1,6 +1,8 @@
 package com.creativefusion.spring6restmvc.controllers;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,5 +30,25 @@ public class CustomErrorController {
                 }).collect(Collectors.toList());
 
         return ResponseEntity.badRequest().body(errorList);
+    }
+
+    @ExceptionHandler
+    ResponseEntity<List<Map<String, String>>> handleJPAViolations(TransactionSystemException exception) {
+        ResponseEntity.BodyBuilder responseEntity = ResponseEntity.badRequest();
+
+        if (exception.getCause().getCause() instanceof ConstraintViolationException ve) {
+
+            List<Map<String, String>> errors = ve.getConstraintViolations().stream()
+                    .map(constraintViolation -> {
+                        Map<String, String> errMap = new HashMap<>();
+                        errMap.put(constraintViolation.getPropertyPath().toString(),
+                                constraintViolation.getMessage());
+                        return errMap;
+                    }).collect(Collectors.toList());
+
+            return responseEntity.body(errors);
+        }
+
+        return responseEntity.build();
     }
 }
