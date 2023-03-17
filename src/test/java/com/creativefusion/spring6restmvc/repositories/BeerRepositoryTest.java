@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class BeerRepositoryTest {
 
     private static final String LONG_NAME = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    @Autowired
-    BeerRepository beerRepository;
+
+    @Autowired BeerRepository beerRepository;
 
     @Test
     void testSaveBeer() {
