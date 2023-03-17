@@ -4,6 +4,7 @@ import com.creativefusion.spring6restmvc.model.BeerDTO;
 import com.creativefusion.spring6restmvc.services.BeerService;
 import com.creativefusion.spring6restmvc.services.BeerServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BeerController.class)
+@Slf4j
 class BeerControllerTest {
 
     @Autowired
@@ -83,11 +86,13 @@ class BeerControllerTest {
         given(beerService.saveNewBeer(any(BeerDTO.class)))
                 .willReturn(beerServiceImpl.listBeers().get(1));
 
-        mockMvc.perform(post(BeerController.BEER_PATH)
+        MvcResult mvcResult = mockMvc.perform(post(BeerController.BEER_PATH)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(beerDTO)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest()).andReturn();
+
+        log.info(mvcResult.getResponse().getContentAsString());
     }
 
     @Test
