@@ -1,6 +1,5 @@
 package com.creativefusion.spring6restmvc.entities;
 
-import com.creativefusion.spring6restmvc.entities.Customer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,11 +27,11 @@ import java.util.UUID;
  */
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Builder
-public class BeerOrder {
+public class BeerOrderLine {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -47,8 +46,11 @@ public class BeerOrder {
     @Version
     private Long version;
 
-    @OneToMany(mappedBy = "beerOrder")
-    private Set<BeerOrderLine> beerOrderLines;
+    @ManyToOne
+    private BeerOrder beerOrder;
+
+    @ManyToOne
+    private Beer beer;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -61,9 +63,6 @@ public class BeerOrder {
         return this.id == null;
     }
 
-    private String customerRef;
-
-    @ManyToOne
-    private Customer customer;
-
+    private Integer orderQuantity = 0;
+    private Integer quantityAllocated = 0;
 }
