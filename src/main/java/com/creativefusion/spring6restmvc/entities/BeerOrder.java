@@ -1,6 +1,5 @@
 package com.creativefusion.spring6restmvc.entities;
 
-import com.creativefusion.spring6restmvc.entities.Customer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
-import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +29,20 @@ import java.util.UUID;
 @Setter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class BeerOrder {
+
+    public BeerOrder(UUID id, Long version, Set<BeerOrderLine> beerOrderLines,
+                     Timestamp createdDate, Timestamp lastModifiedDate,
+                     String customerRef, Customer customer) {
+        this.id = id;
+        this.version = version;
+        this.beerOrderLines = beerOrderLines;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+        this.customerRef = customerRef;
+        this.setCustomer(customer);
+    }
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -65,5 +75,10 @@ public class BeerOrder {
 
     @ManyToOne
     private Customer customer;
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        customer.getBeerOrders().add(this);
+    }
 
 }
