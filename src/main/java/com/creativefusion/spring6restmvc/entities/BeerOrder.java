@@ -1,11 +1,13 @@
 package com.creativefusion.spring6restmvc.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Version;
 
 import lombok.Builder;
@@ -34,7 +36,7 @@ public class BeerOrder {
 
     public BeerOrder(UUID id, Long version, Set<BeerOrderLine> beerOrderLines,
                      Timestamp createdDate, Timestamp lastModifiedDate,
-                     String customerRef, Customer customer) {
+                     String customerRef, Customer customer, BeerOrderShipment beerOrderShipment) {
         this.id = id;
         this.version = version;
         this.beerOrderLines = beerOrderLines;
@@ -42,6 +44,8 @@ public class BeerOrder {
         this.lastModifiedDate = lastModifiedDate;
         this.customerRef = customerRef;
         this.setCustomer(customer);
+        this.beerOrderShipment = beerOrderShipment;
+        this.setBeerOrderShipment(beerOrderShipment);
     }
 
     @Id
@@ -79,6 +83,14 @@ public class BeerOrder {
     public void setCustomer(Customer customer) {
         this.customer = customer;
         customer.getBeerOrders().add(this);
+    }
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private BeerOrderShipment beerOrderShipment;
+
+    public void setBeerOrderShipment(BeerOrderShipment beerOrderShipment) {
+        this.beerOrderShipment = beerOrderShipment;
+        beerOrderShipment.setBeerOrder(this);
     }
 
 }
