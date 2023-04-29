@@ -168,7 +168,7 @@
                     <verbose>true</verbose>
                     <images>
                         <image>
-                            <name>kbe-rest-mvc</name>
+                            <name>creativefusion/${project.artifactId}</name>
                             <build>
                                 <assembly>
                                     <descriptorRef>artifact</descriptorRef>
@@ -176,6 +176,7 @@
                                 <dockerFile>Dockerfile</dockerFile>
                                 <tags>
                                     <tag>latest</tag>
+                                    <tag>${project.version}</tag>
                                 </tags>
                             </build>
                         </image>
