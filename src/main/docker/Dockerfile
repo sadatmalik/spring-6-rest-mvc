@@ -1,6 +1,6 @@
 FROM amazoncorretto:17 as builder
 WORKDIR application
-ADD target/spring-6-rest-mvc-0.0.1-SNAPSHOT.jar ./
+ADD maven/spring-6-rest-mvc-0.0.1-SNAPSHOT.jar ./
 RUN java -Djarmode=layertools -jar spring-6-rest-mvc-0.0.1-SNAPSHOT.jar extract
 
 FROM amazoncorretto:17
