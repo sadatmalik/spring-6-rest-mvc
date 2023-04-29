@@ -168,7 +168,7 @@
                     <verbose>true</verbose>
                     <images>
                         <image>
-                            <name>creativefusion/${project.artifactId}</name>
+                            <name>sadatmalik/${project.artifactId}</name>
                             <build>
                                 <assembly>
                                     <descriptorRef>artifact</descriptorRef>
@@ -181,6 +181,11 @@
                             </build>
                         </image>
                     </images>
+<!-- see https://dmp.fabric8.io/#authentication for more docker hub authentication options -->
+                    <authConfig>
+                        <username>sadatmalik</username>
+                        <password>docker-hub-password-here</password>
+                    </authConfig>
                 </configuration>
             </plugin>
             <plugin>
