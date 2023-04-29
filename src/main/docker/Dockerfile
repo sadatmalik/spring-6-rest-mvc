@@ -1,7 +1,7 @@
 FROM amazoncorretto:17 as builder
 WORKDIR application
-ADD maven/${project.build.finalName} ./
-RUN java -Djarmode=layertools -jar ${project.build.finalName} extract
+ADD maven/${project.build.finalName}.jar ./
+RUN java -Djarmode=layertools -jar ${project.build.finalName}.jar extract
 
 FROM amazoncorretto:17
 WORKDIR application
