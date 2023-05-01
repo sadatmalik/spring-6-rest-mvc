@@ -3,23 +3,31 @@ version: '3.1'
 
 services:
 
-  db:
+  mysql:
     image: mysql
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
     ports:
       - '3306:3306'
-#    expose:
-#      # Opens port 3306 on the container
-#      - '3306'
-#      # Where our data will be persisted
     volumes:
-      - my-db:/var/lib/mysql
+      - my-sql:/var/lib/mysql
 
-# Names our volume
+  spring-6-rest-mvc:
+    image: sadatmalik/spring-6-rest-mvc
+    restart: on-failure
+    depends_on:
+      - mysql
+    ports:
+      - 8081:8081
+
+  spring-6-gateway:
+    image: sadatmalik/spring-6-gateway
+    ports:
+      - 8080:8080
+    restart: on-failure
+    depends_on:
+      - spring-6-rest-mvc
+
 volumes:
-  my-db:
+  my-sql:
