@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: spring-6-gateway
+  name: spring-6-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-6-gateway
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: spring-6-gateway
+    spec:
+      containers:
+      - image: sadatmalik/spring-6-gateway
+        name: spring-6-gateway
+        resources: {}
+status: {}
