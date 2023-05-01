@@ -21,4 +21,7 @@ spec:
       - image: sadatmalik/spring-6-rest-mvc
         name: spring-6-rest-mvc
         resources: {}
+        env:
+          - name: LOGGING_LEVEL_COM_CREATIVEFUSION
+            value: info
 status: {}
