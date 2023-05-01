@@ -13,6 +13,13 @@ services:
     volumes:
       - my-sql:/var/lib/mysql
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+    ports:
+      - 9200:9200
+    environment:
+      discovery.type: single-node
+
   spring-6-rest-mvc:
     image: sadatmalik/spring-6-rest-mvc
     restart: on-failure
