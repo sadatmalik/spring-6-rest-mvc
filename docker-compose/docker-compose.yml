@@ -44,6 +44,9 @@ services:
       - mysql
     ports:
       - 8081:8081
+    labels:
+      collect_logs_with_filebeat: "true"
+      decode_log_event_to_json_object: "true"
 
   spring-6-gateway:
     image: sadatmalik/spring-6-gateway
@@ -52,6 +55,9 @@ services:
     restart: on-failure
     depends_on:
       - spring-6-rest-mvc
+    labels:
+      collect_logs_with_filebeat: "true"
+      decode_log_event_to_json_object: "true"
 
 volumes:
   my-sql:
