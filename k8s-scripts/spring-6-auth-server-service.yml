@@ -13,6 +13,6 @@ spec:
     targetPort: 9000
   selector:
     app: spring-6-auth-server
-  type: ClusterIP
+  type: NodePort
 status:
   loadBalancer: {}
