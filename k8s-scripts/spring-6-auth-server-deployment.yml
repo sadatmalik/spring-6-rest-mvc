@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: spring-6-auth-server
+  name: spring-6-auth-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-6-auth-server
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: spring-6-auth-server
+    spec:
+      containers:
+      - image: sadatmalik/spring-6-auth-server
+        name: spring-6-auth-server
+        resources: {}
+status: {}
