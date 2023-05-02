@@ -21,4 +21,8 @@ spec:
       - image: sadatmalik/spring-6-auth-server
         name: spring-6-auth-server
         resources: {}
+        env:
+          - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY
+            value: trace
+
 status: {}

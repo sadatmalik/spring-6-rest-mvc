@@ -24,6 +24,8 @@ spec:
         env:
           - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_GATEWAY
             value: trace
+          - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY
+            value: trace
           - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
             value: http://spring-6-auth-server:9000
 status: {}
