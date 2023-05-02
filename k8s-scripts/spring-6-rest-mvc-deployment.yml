@@ -29,6 +29,8 @@ spec:
         env:
           - name: LOGGING_LEVEL_COM_CREATIVEFUSION
             value: info
+          - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
+            value: spring-6-auth-server:9000
         readinessProbe:
           httpGet:
             port: 8081

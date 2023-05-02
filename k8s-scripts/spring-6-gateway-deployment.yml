@@ -21,4 +21,7 @@ spec:
       - image: sadatmalik/spring-6-gateway
         name: spring-6-gateway
         resources: {}
+        env:
+          - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
+            value: http://spring-6-auth-server:9000
 status: {}
