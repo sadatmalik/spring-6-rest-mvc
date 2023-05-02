@@ -16,6 +16,11 @@ spec:
       creationTimestamp: null
       labels:
         app: spring-6-rest-mvc
+      annotations:
+        co.elastic.logs/enabled: "true"
+        co.elastic.logs.json-logging/json.keys_under_root: "true"
+        co.elastic.logs.json-logging/json.add_error_key: "true"
+        co.elastic.logs.json-logging/json.message_key: "message"
     spec:
       containers:
       - image: sadatmalik/spring-6-rest-mvc
