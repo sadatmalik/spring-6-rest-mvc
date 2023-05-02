@@ -18,6 +18,8 @@ public class SpringSecConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/v3/api-docs**", "/swagger-ui/**",  "/swagger-ui.html")
                 .permitAll()
+                .requestMatchers("/actuator/**")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and().oauth2ResourceServer().jwt();
         return http.build();
