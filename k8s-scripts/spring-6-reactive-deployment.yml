@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: spring-6-reactive
+  name: spring-6-reactive
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-6-reactive
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: spring-6-reactive
+    spec:
+      containers:
+      - image: sadatmalik/spring-6-reactive
+        name: spring-6-reactive
+        resources: {}
+        env:
+          - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY
+            value: trace
+          - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
+            value: http://spring-6-auth-server:9000
+
+status: {}
