@@ -24,4 +24,12 @@ spec:
         env:
           - name: LOGGING_LEVEL_COM_CREATIVEFUSION
             value: info
+        readinessProbe:
+          httpGet:
+            port: 8081
+            path: /actuator/health/readiness
+        livenessProbe:
+          httpGet:
+            port: 8081
+            path: /actuator/health/liveness
 status: {}
